@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.honeyrinn.MySecondTestAppSpringBoot.util.Systems;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -23,7 +24,7 @@ public class Request {
     @Max(32)
     private String operationUid;
 
-    private String systemName;
+    private Systems systemName;
 
     @NotBlank
     private String systemTime;
@@ -38,5 +39,18 @@ public class Request {
     private int productCode;
     private int smsCode;
 
-
+    @Override
+    public String toString(){
+        return "{"+
+                "uid='" + uid + '\'' +
+                ", operationUid='" + operationUid + '\'' +
+                ", systemName='" + systemName + '\'' +
+                ", systemTime='" + systemTime + '\'' +
+                ", source='" + source + '\'' +
+                ", communicationId=" + communicationId +
+                ", templateId=" + templateId +
+                ", productCode=" + productCode +
+                ", smsCode=" + smsCode +
+                '}';
+    }
 }

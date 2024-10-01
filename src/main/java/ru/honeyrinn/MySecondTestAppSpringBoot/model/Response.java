@@ -2,6 +2,9 @@ package ru.honeyrinn.MySecondTestAppSpringBoot.model;
 
 import lombok.Builder;
 import lombok.Data;
+import ru.honeyrinn.MySecondTestAppSpringBoot.util.Codes;
+import ru.honeyrinn.MySecondTestAppSpringBoot.util.ErrorCodes;
+import ru.honeyrinn.MySecondTestAppSpringBoot.util.ErrorMessages;
 
 import javax.validation.constraints.NotBlank;
 
@@ -19,11 +22,11 @@ public class Response {
     private String systemTime;
 
     @NotBlank
-    private String code;
+    private Codes code;
 
     @NotBlank
-    private String errorCode;
+    private ErrorCodes errorCode;
 
     @NotBlank
-    private String errorMessage;
+    private ErrorMessages errorMessage;
 }
