@@ -24,6 +24,10 @@ import ru.honeyrinn.MySecondTestAppSpringBoot.util.ErrorMessages;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 @Slf4j
@@ -44,6 +48,7 @@ public class MyController {
 
     @PostMapping(value = "/feedback")
     public ResponseEntity<Response> feedback(@Valid @RequestBody Request request, BindingResult bindingResult){
+
 
         log.info("request: {}", request);
 
@@ -79,6 +84,12 @@ public class MyController {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         modifyResponseService.modify(response);
+
+        Instant inputInstant = Instant.parse(request.getSystemTime());
+        Instant currentInstant = Instant.parse(DateTimeUtil.getCustomFormat().format(new Date()));
+
+        long razn = Duration.between(inputInstant, currentInstant).toMillis();
+        log.info("Разница в мс составила: {}", razn);
         log.info("response: {}", response);
         return new ResponseEntity<>(modifyResponseService.modify(response), HttpStatus.OK);
     }
