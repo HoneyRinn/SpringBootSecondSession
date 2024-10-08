@@ -17,7 +17,7 @@ public class ModifySystemTimeResponseService implements ModifyResponseService{
 
         response.setSystemTime(DateTimeUtil.getCustomFormat().format(new Date()));
 
-        log.info("response: {}", response);
+        //log.info("response: {}", response);
         return response;
     }
 }

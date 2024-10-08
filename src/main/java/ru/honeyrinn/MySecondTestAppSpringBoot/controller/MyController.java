@@ -15,6 +15,7 @@ import ru.honeyrinn.MySecondTestAppSpringBoot.exception.ValidationFailedExceptio
 import ru.honeyrinn.MySecondTestAppSpringBoot.model.Request;
 import ru.honeyrinn.MySecondTestAppSpringBoot.model.Response;
 import ru.honeyrinn.MySecondTestAppSpringBoot.service.CodeService;
+import ru.honeyrinn.MySecondTestAppSpringBoot.service.ModifyRequestService;
 import ru.honeyrinn.MySecondTestAppSpringBoot.service.ModifyResponseService;
 import ru.honeyrinn.MySecondTestAppSpringBoot.service.ValidationService;
 import ru.honeyrinn.MySecondTestAppSpringBoot.util.Codes;
@@ -24,6 +25,9 @@ import ru.honeyrinn.MySecondTestAppSpringBoot.util.ErrorMessages;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 @Slf4j
@@ -33,17 +37,22 @@ public class MyController {
     private final ValidationService validationService;
     private final CodeService codeService;
     private final ModifyResponseService modifyResponseService;
+    private final ModifyRequestService modifyRequestService;
 
     @Autowired
-    public MyController(ValidationService validationService, CodeService codeService,
-                        @Qualifier("ModifySystemTimeResponseService") ModifyResponseService modifyResponseService) {
+    public MyController(ValidationService validationService,
+                        CodeService codeService,
+                        @Qualifier("ModifySystemTimeResponseService") ModifyResponseService modifyResponseService,
+                        @Qualifier("ModifySystemTimeRequestService") ModifyRequestService modifyRequestService) {
         this.validationService = validationService;
         this.codeService = codeService;
         this.modifyResponseService = modifyResponseService;
+        this.modifyRequestService = modifyRequestService;
     }
 
     @PostMapping(value = "/feedback")
     public ResponseEntity<Response> feedback(@Valid @RequestBody Request request, BindingResult bindingResult){
+
 
         log.info("request: {}", request);
 
@@ -79,7 +88,7 @@ public class MyController {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         modifyResponseService.modify(response);
-        log.info("response: {}", response);
+        modifyRequestService.modify(request);
         return new ResponseEntity<>(modifyResponseService.modify(response), HttpStatus.OK);
     }
 }
