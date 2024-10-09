@@ -13,20 +13,23 @@ import javax.validation.constraints.NotBlank;
 public class Response {
 
     @NotBlank
-    private String uid;
+    private String uid; //Уникальный идентификатор сообщения
 
     @NotBlank
-    private String operationUid;
+    private String operationUid; //Уникальный идентификатор операции
 
     @NotBlank
-    private String systemTime;
+    private String systemTime; //Время создания сообщения
 
     @NotBlank
-    private Codes code;
+    private Codes code; //Код сообщения
 
     @NotBlank
-    private ErrorCodes errorCode;
+    private Double annualBonus; //Ежегодня премия
 
     @NotBlank
-    private ErrorMessages errorMessage;
+    private ErrorCodes errorCode; //Наименование ошибка
+
+    @NotBlank
+    private ErrorMessages errorMessage; //Сообщение об ошибке
 }
